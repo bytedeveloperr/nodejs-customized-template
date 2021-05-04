@@ -26,6 +26,20 @@ export class PrismaModel {
     });
   }
 
+  static async findById(id, options = {}) {
+    return await prisma[this.schema].findFirst({
+      where: { id },
+      ...options,
+    });
+  }
+
+  static async find(where, options = {}) {
+    return await prisma[this.schema].findMany({
+      where,
+      ...options,
+    });
+  }
+
   static async findOne(query, options) {
     return await prisma[this.schema].findFirst({
       where: query,
@@ -37,6 +51,20 @@ export class PrismaModel {
     return await prisma[this.schema].update({
       where,
       data,
+      ...options,
+    });
+  }
+
+  // static async create(data, options = {}) {
+  //   return await prisma[this.schema].create({
+  //     data,
+  //     ...options,
+  //   });
+  // }
+
+  static async deleteOne(criteria, options = {}) {
+    return await prisma[this.schema].delete({
+      where: criteria,
       ...options,
     });
   }
