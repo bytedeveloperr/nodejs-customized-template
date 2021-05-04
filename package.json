@@ -1,0 +1,37 @@
+{
+  "name": "turbo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "description": "",
+  "scripts": {
+    "dev": "nodemon -r dotenv/config index.js",
+    "migrate-dev": "prisma migrate dev"
+  },
+  "dependencies": {
+    "@prisma/client": "^2.21.2",
+    "ajv": "^8.2.0",
+    "ajv-error-messages": "^1.0.3",
+    "argon2": "^0.27.2",
+    "ejs": "^3.1.6",
+    "fastify": "^3.15.1",
+    "fastify-cors": "^6.0.0",
+    "fastify-formbody": "^5.0.0",
+    "fastify-helmet": "^5.3.1",
+    "fastify-plugin": "^3.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "point-of-view": "^4.14.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "prisma": {
+    "schema": "./database/schema.prisma"
+  },
+  "engines": {
+    "node": "15.x"
+  }
+}
