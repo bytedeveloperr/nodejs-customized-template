@@ -179,4 +179,5 @@ now restart the server. if you check the console (your terminal), you should get
 ![image](https://user-images.githubusercontent.com/48928718/117371927-a16a8a80-aec0-11eb-98ab-6ac8f9801014.png)
 That's so because a corresponding service file is automatically bound to your controller from the `app/services` folder but in this case it cannot find it.
 Now let's referesh the browser at [http://localhost:3000/todos](http://localhost:3000/todos). and we get the content of our controller back.
+
 ![image](https://user-images.githubusercontent.com/48928718/117372302-38cfdd80-aec1-11eb-99e0-c83c22b0928a.png)
