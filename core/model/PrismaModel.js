@@ -14,58 +14,55 @@ export class PrismaModel {
     Object.assign(this.fields, fields);
   }
 
-  async save(options) {
+  save(options) {
     const modelClass = this.constructor;
     if (modelClass.jsonSchema) {
       validator.validate(modelClass.jsonSchema, this.fields);
     }
 
-    return await prisma[modelClass.schema].create({
+    return prisma[modelClass.schema].create({
       data: this.fields,
       ...options,
     });
   }
 
-  static async findById(id, options = {}) {
-    return await prisma[this.schema].findFirst({
+  static findById(id, options = {}) {
+    return prisma[this.schema].findFirst({
       where: { id },
       ...options,
     });
   }
 
-  static async find(where, options = {}) {
-    return await prisma[this.schema].findMany({
+  static find(where, options = {}) {
+    return prisma[this.schema].findMany({
       where,
       ...options,
     });
   }
 
-  static async findOne(query, options) {
-    return await prisma[this.schema].findFirst({
+  static findOne(query, options) {
+    return prisma[this.schema].findFirst({
       where: query,
       ...options,
     });
   }
 
-  static async updateOne(where, data, options = {}) {
-    return await prisma[this.schema].update({
+  static updateOne(where, data, options = {}) {
+    return prisma[this.schema].update({
       where,
       data,
       ...options,
     });
   }
 
-  // static async create(data, options = {}) {
-  //   return await prisma[this.schema].create({
-  //     data,
-  //     ...options,
-  //   });
-  // }
-
-  static async deleteOne(criteria, options = {}) {
-    return await prisma[this.schema].delete({
+  static deleteOne(criteria, options = {}) {
+    return prisma[this.schema].delete({
       where: criteria,
       ...options,
     });
+  }
+
+  static $transaction(args) {
+    return prisma;
   }
 }
