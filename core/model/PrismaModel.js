@@ -1,11 +1,11 @@
 import Prisma from "@prisma/client";
 import { Validator } from "../Validator.js";
 
-const prisma = new Prisma.PrismaClient();
 const validator = new Validator();
 
 export class PrismaModel {
   static schema = "";
+  static prisma = new Prisma.PrismaClient();
   static jsonSchema = null;
 
   fields = {};
@@ -20,35 +20,54 @@ export class PrismaModel {
       validator.validate(modelClass.jsonSchema, this.fields);
     }
 
-    return prisma[modelClass.schema].create({
+    return modelClass.prisma[modelClass.schema].create({
       data: this.fields,
       ...options,
     });
   }
 
+  static create(data, options) {
+    if (this.jsonSchema) {
+      validator.validate(this.jsonSchema, this.fields);
+    }
+
+    return this.prisma[this.schema].create({
+      data,
+      ...options,
+    });
+  }
+
   static findById(id, options = {}) {
-    return prisma[this.schema].findFirst({
+    return this.prisma[this.schema].findFirst({
       where: { id },
       ...options,
     });
   }
 
   static find(where, options = {}) {
-    return prisma[this.schema].findMany({
+    return this.prisma[this.schema].findMany({
       where,
       ...options,
     });
   }
 
   static findOne(query, options) {
-    return prisma[this.schema].findFirst({
+    return this.prisma[this.schema].findFirst({
       where: query,
       ...options,
     });
   }
 
   static updateOne(where, data, options = {}) {
-    return prisma[this.schema].update({
+    return this.prisma[this.schema].update({
+      where,
+      data,
+      ...options,
+    });
+  }
+
+  static updateMany(where, data, options = {}) {
+    return this.prisma[this.schema].updateMany({
       where,
       data,
       ...options,
@@ -56,13 +75,13 @@ export class PrismaModel {
   }
 
   static deleteOne(criteria, options = {}) {
-    return prisma[this.schema].delete({
+    return this.prisma[this.schema].delete({
       where: criteria,
       ...options,
     });
   }
 
   static $transaction(args) {
-    return prisma;
+    return this.prisma.$transaction(args);
   }
 }
